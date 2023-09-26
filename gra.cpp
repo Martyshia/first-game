@@ -33,7 +33,7 @@ int main ()
 	// BULLET INITIALIZE
 	std::vector<sf::RectangleShape> bullets;
 	float bulletSpeed = 0.5f;
-
+	
 	// ENEMY INITIALIZE
 	sf::Texture enemyTexture;
 	sf::Sprite enemySprite;
@@ -83,7 +83,6 @@ int main ()
 	// SETTING POSITION AND DIRECTION OF THE BULLET
 
 
-	// sf::Vector2f bulletDirection = enemySprite.getPosition() - bullet.getPosition();
 	// bulletDirection = NormalizeVector(bulletDirection);
 
 	// UPDATE LOOP
@@ -132,17 +131,23 @@ int main ()
 
 			int i = bullets.size() - 1;
 			bullets[i].setPosition(playerSprite.getPosition()); // set pos of the bullet
+		}
 
+		for (size_t i = 0; i < bullets.size(); i++)
+		{
 			sf::Vector2f bulletDirection = enemySprite.getPosition() - bullets[i].getPosition();
 			bulletDirection = NormalizeVector(bulletDirection); // normalizing the vector
-
+			bullets[i].setPosition(bullets[i].getPosition() + bulletDirection * bulletSpeed);
 		}
 
 		// WINDOW DRAW
 		window.clear(sf::Color::Black);
 		window.draw(playerSprite);
 		window.draw(enemySprite);
-		// window.draw(bullet);	
+		
+		for (size_t i = 0; i < bullets.size(); i++)
+			window.draw(bullets[i]);
+
 		window.display();
 	}
 
